@@ -19,7 +19,7 @@ public:
 	//		fRotation: the rotation of the rigidbody.
 	//		fMass: the mass of the rigidbody.
 	//--------------------------------------------------------------------------------------
-	Rigidbody(EShapeType eShapeID, glm::vec2 v2Position, glm::vec2 v2Velocity, float fRotation, float fMass, float fLinearDrag, float fAngularDrag, float fElasticity);
+	Rigidbody(EShapeType eShapeID, glm::vec3 v2Position, glm::vec3 v2Velocity, float fRotation, float fMass, float fLinearDrag, float fAngularDrag, float fElasticity);
 
 	//--------------------------------------------------------------------------------------
 	// Default Destructor
@@ -33,7 +33,7 @@ public:
 	//		v2Gravity: vector2 gravity to apply to the update function.
 	//		fTimeStep: float value for the time time step of the update.
 	//--------------------------------------------------------------------------------------
-	virtual void FixedUpdate(glm::vec2 v2Gravity, float fTimeStep);
+	virtual void FixedUpdate(glm::vec3 v2Gravity, float fTimeStep);
 
 	//--------------------------------------------------------------------------------------
 	// Debug: Debugging function for this object.
@@ -44,9 +44,8 @@ public:
 	// ApplyForce: Apply force to this rigid body.
 	//
 	// Param:
-	//		v2Force: a vector2 of the force to be applied.
 	//--------------------------------------------------------------------------------------
-	void ApplyForce(glm::vec2 v2Force);
+	void ApplyForce(glm::vec3 v2Force, glm::vec3 v2Position);
 
 	//--------------------------------------------------------------------------------------
 	// ApplyForceToActor: Apply force to another rigidbody while applying negative 
@@ -56,7 +55,7 @@ public:
 	//		pActor: Rigidbody pointer to apply force to.
 	//		v2Force: a vector2 of the force to be applied.
 	//--------------------------------------------------------------------------------------
-	void ApplyForceToActor(Rigidbody* pActor, glm::vec2 v2Force);
+	//void ApplyForceToActor(Rigidbody* pActor, glm::vec3 v2Force);
 
 
 
@@ -66,9 +65,8 @@ public:
 	// ResolveCollision: Resolve a collision between 2 shapes with a rigidbody.
 	//
 	// Param:
-	//		pActor: the object being collided with.
 	//--------------------------------------------------------------------------------------
-	void ResolveCollision(Rigidbody* pActor);
+	void ResolveCollision(Rigidbody* pActor, glm::vec3 v2Contact, glm::vec3* v2pCollisionNormal=nullptr);
 	
 
 
@@ -81,7 +79,7 @@ public:
 	// Param:
 	//		v2Position: the position to set the rigidbody to.
 	//--------------------------------------------------------------------------------------
-	void SetPosition(glm::vec2 v2Position) { m_v2Position = v2Position; }
+	void SetPosition(glm::vec3 v2Position) { m_v2Position = v2Position; }
 
 
 
@@ -94,7 +92,7 @@ public:
 	// Return:
 	//		Vector2: the postion of the rigidbody
 	//--------------------------------------------------------------------------------------
-	glm::vec2 GetPosition() { return m_v2Position; }
+	glm::vec3 GetPosition() { return m_v2Position; }
 
 	//--------------------------------------------------------------------------------------
 	// GetRotation: Get the rotation of the rigidbody.
@@ -110,7 +108,7 @@ public:
 	// Return:
 	//		Vector2: the velocity of the rigidbody.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 GetVelocity() { return m_v2Velocity; }
+	glm::vec3 GetVelocity() { return m_v2Velocity; }
 
 	//--------------------------------------------------------------------------------------
 	// GetMass: Get the mass of the rigidbody.
@@ -126,7 +124,7 @@ public:
 	// Param:
 	//		v2Value: A vector2 value to set the velocity.
 	//--------------------------------------------------------------------------------------
-	void SetVelocity(glm::vec2 v2Value) { m_v2Velocity = v2Value; }
+	void SetVelocity(glm::vec3 v2Value) { m_v2Velocity = v2Value; }
 
 
 
@@ -154,12 +152,12 @@ protected:
 	//--------------------------------------------------------------------------------------
 	// A Vector2 for the position of the rigidbody.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 m_v2Position;
+	glm::vec3 m_v2Position;
 
 	//--------------------------------------------------------------------------------------
 	// A Vector2 for the velocity of rigidbody.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 m_v2Velocity;
+	glm::vec3 m_v2Velocity;
 
 	//--------------------------------------------------------------------------------------
 	// A float for the mass of the rigidbody.
@@ -182,4 +180,10 @@ protected:
 	float m_fLinearDrag;
 	float m_fAngularDrag;
 	float m_fElasticity;
+
+
+
+
+
+	float m_fMoment;
 };

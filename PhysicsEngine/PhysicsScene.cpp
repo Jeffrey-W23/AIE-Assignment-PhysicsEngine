@@ -28,7 +28,7 @@ PhysicsScene::PhysicsScene()
 	m_fTimeStep = 0.01f;
 
 	// set defualt for gravity
-	m_v2Gravity = glm::vec2(0, 0);
+	m_v2Gravity = glm::vec3(0, 0, 0);
 }
 
 //--------------------------------------------------------------------------------------
@@ -185,11 +185,11 @@ bool PhysicsScene::PlaneToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 	if (pPlane != nullptr || pBox != nullptr)
 	{
 		// Get the normal of the plane and get each point of the box
-		glm::vec2 v2Normal = pPlane->GetNormal();
-		glm::vec2 v2BottomLeft = pBox->GetMin();
-		glm::vec2 v2BottomRight = pBox->GetMin() + glm::vec2(pBox->GetWidth(), 0);
-		glm::vec2 v2TopLeft = pBox->GetMin() + glm::vec2(0, pBox->GetHeight());
-		glm::vec2 v2TopRight = pBox->GetMax();
+		glm::vec3 v2Normal = pPlane->GetNormal();
+		glm::vec3 v2BottomLeft = pBox->GetMin();
+		glm::vec3 v2BottomRight = pBox->GetMin() + glm::vec3(pBox->GetX(), 0, 0);
+		glm::vec3 v2TopLeft = pBox->GetMin() + glm::vec3(0, pBox->GetY(), 0);
+		glm::vec3 v2TopRight = pBox->GetMax();
 
 		// box crosses the plane
 		if (glm::dot(v2Normal, v2BottomLeft) - pPlane->GetDistance() < 0 ||
@@ -198,7 +198,7 @@ bool PhysicsScene::PlaneToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 			glm::dot(v2Normal, v2TopRight) - pPlane->GetDistance() < 0)
 		{
 			// Resolve collision between plane and box
-			pPlane->ResolveCollision(pBox);
+			//pPlane->ResolveCollision(pBox);
 
 			// there was a collision return true
 			return true;
@@ -228,7 +228,7 @@ bool PhysicsScene::SphereToPlane(PhysicsObject* obj1, PhysicsObject* obj2)
 	if (pSphere != nullptr && pPlane != nullptr)
 	{
 		// new vector2 for the collision Normal
-		glm::vec2 v2CollisionNormal = pPlane->GetNormal();
+		glm::vec3 v2CollisionNormal = pPlane->GetNormal();
 
 		// dot product of sphere position and plane normal minus plane distance
 		float fSphereToPlane = glm::dot(pSphere->GetPosition(), pPlane->GetNormal()) - pPlane->GetDistance();
@@ -246,8 +246,11 @@ bool PhysicsScene::SphereToPlane(PhysicsObject* obj1, PhysicsObject* obj2)
 		// if intersection is over 0
 		if (fIntersection > 0)
 		{
+			//
+			glm::vec3 v2Contact = pSphere->GetPosition() + (v2CollisionNormal * -pSphere->GetRadius());
+
 			// Resolve collision between plane and sphere
-			pPlane->ResolveCollision(pSphere);
+			pPlane->ResolveCollision(pSphere, v2Contact);
 			
 			// there was a collision return true
 			return true;
@@ -277,7 +280,7 @@ bool PhysicsScene::SphereToSphere(PhysicsObject* obj1, PhysicsObject* obj2)
 	if (pSphere1 != nullptr && pSphere2 != nullptr)
 	{
 		// new vector2 value for the dsitance between each sphere
-		glm::vec2 v2Distance = pSphere1->GetPosition() - pSphere2->GetPosition();
+		glm::vec3 v2Distance = pSphere1->GetPosition() - pSphere2->GetPosition();
 
 		// new float value for the total radius of both spheres
 		float fTotalRad = pSphere1->GetRadius() + pSphere2->GetRadius();
@@ -290,7 +293,9 @@ bool PhysicsScene::SphereToSphere(PhysicsObject* obj1, PhysicsObject* obj2)
 
 
 
-			pSphere1->ResolveCollision(pSphere2);
+
+
+			pSphere1->ResolveCollision(pSphere2, 0.5f * (pSphere1->GetPosition() + pSphere2->GetPosition()));
 
 
 
@@ -299,7 +304,7 @@ bool PhysicsScene::SphereToSphere(PhysicsObject* obj1, PhysicsObject* obj2)
 
 			// Resolve collision between spheres
 			float fOverlap = glm::length(v2Distance) - fTotalRad;
-			glm::vec2 v2Overlap = glm::normalize(v2Distance) * fOverlap;
+			glm::vec3 v2Overlap = glm::normalize(v2Distance) * fOverlap;
 			pSphere2->SetPosition(pSphere2->GetPosition() + v2Overlap);
 
 			// there was a collision return true
@@ -330,14 +335,14 @@ bool PhysicsScene::SphereToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 	if (pSphere != nullptr && pBox != nullptr)
 	{
 		// clamp the sphere postion and the box min and max
-		glm::vec2 v2Clamp = glm::clamp(pSphere->GetPosition(), pBox->GetMin(), pBox->GetMax());
-		glm::vec2 v2Value = v2Clamp - pSphere->GetPosition();
+		glm::vec3 v2Clamp = glm::clamp(pSphere->GetPosition(), pBox->GetMin(), pBox->GetMax());
+		glm::vec3 v2Value = v2Clamp - pSphere->GetPosition();
 
 		// if the length of v2Value is less than or equal to sphere radius
 		if (glm::length(v2Value) <= pSphere->GetRadius())
 		{
 			// Resolve collision between sphere and box
-			pSphere->ResolveCollision(pBox);
+			//pSphere->ResolveCollision(pBox);
 
 			// there was a collision return true
 			return true;
@@ -397,21 +402,23 @@ bool PhysicsScene::BoxToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 	if (pBox1 != nullptr && pBox2 != nullptr)
 	{
 		// get the min and max of box1
-		glm::vec2 v2Min1 = pBox1->GetMin();
-		glm::vec2 v2Max1 = pBox1->GetMax();
+		glm::vec3 v2Min1 = pBox1->GetMin();
+		glm::vec3 v2Max1 = pBox1->GetMax();
 
 		// get the min and max of box2
-		glm::vec2 v2Min2 = pBox2->GetMin();
-		glm::vec2 v2Max2 = pBox2->GetMax();
+		glm::vec3 v2Min2 = pBox2->GetMin();
+		glm::vec3 v2Max2 = pBox2->GetMax();
 
 		// if the boxes cross
 		if (v2Min1.x <= v2Max2.x && 
-			v2Min1.y <= v2Max2.y && 
+			v2Min1.y <= v2Max2.y &&
+			v2Min1.z <= v2Max2.z &&
 			v2Max1.x >= v2Min2.x && 
-			v2Max1.y >= v2Min2.y)
+			v2Max1.y >= v2Min2.y &&
+			v2Max1.z >= v2Min2.z)
 		{
 			// Resolve collision between boxes
-			pBox1->ResolveCollision(pBox2);
+			//pBox1->ResolveCollision(pBox2);
 
 			// there was a collision return true
 			return true;

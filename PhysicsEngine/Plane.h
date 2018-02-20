@@ -23,7 +23,7 @@ public:
 	//		v2Normal: a vector2 for the normal of the plane.
 	//		fDistance: a float value for the distance of the plane. 
 	//--------------------------------------------------------------------------------------
-	Plane(glm::vec2 v2Normal, float fDistance);
+	Plane(glm::vec3 v2Normal, float fDistance);
 
 	//--------------------------------------------------------------------------------------
 	// Default Destructor
@@ -37,7 +37,7 @@ public:
 	//		v2Gravity: vector2 gravity to apply to the update function.
 	//		fTimeStep: float value for the time time step of the update.
 	//--------------------------------------------------------------------------------------
-	virtual void FixedUpdate(glm::vec2 v2Gravity, float fTimeStep) {}
+	virtual void FixedUpdate(glm::vec3 v2Gravity, float fTimeStep) {}
 
 	//--------------------------------------------------------------------------------------
 	// Debug: Debugging function for this object.
@@ -67,7 +67,7 @@ public:
 
 
 
-	void ResolveCollision(Rigidbody* actor2);
+	void ResolveCollision(Rigidbody* actor2, glm::vec3 v2Contact);
 
 
 
@@ -82,7 +82,7 @@ public:
 	// Return:
 	//		Vector2: the normal of the plane.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 GetNormal() { return m_v2Normal; }
+	glm::vec3 GetNormal() { return m_v2Normal; }
 
 	//--------------------------------------------------------------------------------------
 	// GetDistance: get the distance to orgin of the plane.
@@ -97,7 +97,7 @@ protected:
 	//--------------------------------------------------------------------------------------
 	// A vector2 for the normal
 	//--------------------------------------------------------------------------------------
-	glm::vec2 m_v2Normal;
+	glm::vec3 m_v2Normal;
 
 	//--------------------------------------------------------------------------------------
 	// A float for the dsitance to Origin.

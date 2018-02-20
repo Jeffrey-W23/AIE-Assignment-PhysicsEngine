@@ -32,7 +32,7 @@ public:
 	//		fRadius: a float value for sphere radius.
 	//		v4Color: a vector4 for sphere color.
 	//--------------------------------------------------------------------------------------
-	Sphere(glm::vec2 v2Position, glm::vec2 v2Velocity, float fMass, float fRadius, glm::vec4 v4Color);
+	Sphere(glm::vec3 v2Position, glm::vec3 v2Velocity, float fMass, float fRadius, glm::vec4 v4Color);
 
 	//--------------------------------------------------------------------------------------
 	// Default Destructor.

@@ -12,7 +12,7 @@
 //		fRadius: a float value for sphere radius.
 //		v4Color: a vector4 for sphere color.
 //--------------------------------------------------------------------------------------
-Sphere::Sphere(glm::vec2 v2Position, glm::vec2 v2Velocity, float fMass, float fRadius, glm::vec4 v4Color) : Rigidbody(ESHAPETYPE_SPHERE, v2Position, v2Velocity, 0, fMass, 0.2f, 0.2f, 0.8f)
+Sphere::Sphere(glm::vec3 v2Position, glm::vec3 v2Velocity, float fMass, float fRadius, glm::vec4 v4Color) : Rigidbody(ESHAPETYPE_SPHERE, v2Position, v2Velocity, 0, fMass, 0.2f, 0.2f, 0.8f)
 {
 	// set sphere radius
 	m_fRadius = fRadius;
@@ -34,5 +34,5 @@ Sphere::~Sphere()
 void Sphere::MakeGizmo()
 {
 	// Add a 2d circe gizmo.
-	aie::Gizmos::add2DCircle(m_v2Position, m_fRadius, 12, m_v4Color);
+	aie::Gizmos::addSphere(m_v2Position, m_fRadius, 12, 12, m_v4Color);
 }

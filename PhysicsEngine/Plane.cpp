@@ -11,7 +11,7 @@
 //		v2Normal: a vector2 for the normal of the plane.
 //		fDistance: a float value for the distance of the plane. 
 //--------------------------------------------------------------------------------------
-Plane::Plane(glm::vec2 v2Normal, float fDistance) : PhysicsObject(ESHAPETYPE_PLANE)
+Plane::Plane(glm::vec3 v2Normal, float fDistance) : PhysicsObject(ESHAPETYPE_PLANE)
 {
 	// set defaults
 	m_fDistanceToOrigin = fDistance;
@@ -32,12 +32,19 @@ void Plane::MakeGizmo()
 {
 	// make the plane object
 	float fLineSegmentLength = 300; 
-	glm::vec2 v2Parallel(m_v2Normal.y, -m_v2Normal.x);
-	glm::vec2 v2CenterPoint = m_v2Normal * m_fDistanceToOrigin;
+	glm::vec3 v2Parallel(m_v2Normal.y, -m_v2Normal.x, 0);
+	glm::vec3 v2CenterPoint = m_v2Normal * m_fDistanceToOrigin;
 	glm::vec4 v4Colour(1, 1, 1, 1); 
-	glm::vec2 v2Start = v2CenterPoint + (v2Parallel * fLineSegmentLength);
-	glm::vec2 v2End = v2CenterPoint - (v2Parallel * fLineSegmentLength);
-	aie::Gizmos::add2DLine(v2Start, v2End, v4Colour);
+	glm::vec3 v2Start = v2CenterPoint + (v2Parallel * fLineSegmentLength);
+	glm::vec3 v2End = v2CenterPoint - (v2Parallel * fLineSegmentLength);
+	
+	
+	
+	
+	
+	// Get back to Adam about this next week.
+	//aie::Gizmos::add2DLine(v2Start, v2End, v4Colour);
+	aie::Gizmos::addDisk(v2Start, 100, 4, v4Colour);
 }
 
 
@@ -48,15 +55,15 @@ void Plane::MakeGizmo()
 
 
 
-void Plane::ResolveCollision(Rigidbody* pActor)
+void Plane::ResolveCollision(Rigidbody* pActor, glm::vec3 v2Contact)
 {
-	glm::vec2 v2Normal = m_v2Normal;
-	glm::vec2 v2RelativeVelocity = pActor->GetVelocity();
+	glm::vec3 v2Normal = m_v2Normal;
+	glm::vec3 v2RelativeVelocity = pActor->GetVelocity();
 
-	float fElasticity = 1;
+	float fElasticity = pActor->GetElasticity();
 	float fJFormula = glm::dot(-(1 + fElasticity) * (v2RelativeVelocity), v2Normal) / glm::dot(v2Normal, v2Normal * (1 / pActor->GetMass()));
 
-	glm::vec2 v2Force = v2Normal * fJFormula;
+	glm::vec3 v2Force = v2Normal * fJFormula;
 
-	pActor->ApplyForce(v2Force);
+	pActor->ApplyForce(v2Force, v2Contact - pActor->GetPosition());
 }

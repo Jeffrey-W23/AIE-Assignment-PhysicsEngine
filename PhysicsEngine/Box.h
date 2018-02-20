@@ -25,7 +25,7 @@ public:
 	//		fHeight: a float value for the box height.
 	//		v4Color: a vector4 for box color.
 	//--------------------------------------------------------------------------------------
-	Box(glm::vec2 v2Position, glm::vec2 v2Velocity, float fMass, float fWidth, float fHeight, glm::vec4 v4Colour);
+	Box(glm::vec3 v2Position, glm::vec3 v2Velocity, float fMass, float fX, float fY, float fZ, glm::vec4 v4Colour);
 
 	//--------------------------------------------------------------------------------------
 	// Default Destructor.
@@ -43,7 +43,7 @@ public:
 	// Return:
 	//		float: a float value for the width of the box.
 	//--------------------------------------------------------------------------------------
-	float GetWidth() { return m_fWidth; }
+	float GetX() { return m_fX; }
 
 	//--------------------------------------------------------------------------------------
 	// GetHeight: Get the height of the box.
@@ -51,7 +51,28 @@ public:
 	// Return:
 	//		float: a float value for the height of the box.
 	//--------------------------------------------------------------------------------------
-	float GetHeight() { return m_fHeight; }
+	float GetY() { return m_fY; }
+
+
+
+
+
+
+
+	//--------------------------------------------------------------------------------------
+	// GetHeight: Get the height of the box.
+	//
+	// Return:
+	//		float: a float value for the height of the box.
+	//--------------------------------------------------------------------------------------
+	float GetZ() { return m_fZ; }
+
+
+
+
+
+
+
 
 	//--------------------------------------------------------------------------------------
 	// GetDimensions: Get the dimensions of the box.
@@ -59,7 +80,7 @@ public:
 	// Return:
 	//		Vector2: a vector2 value for the dimensions of the box.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 GetDimensions() { return m_v2Dimensions; }
+	glm::vec3 GetDimensions() { return m_v2Dimensions; }
 
 	//--------------------------------------------------------------------------------------
 	// GetMin: Get the min of the box.
@@ -67,7 +88,7 @@ public:
 	// Return:
 	//		Vector2: a vector2 value for the min of the box.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 GetMin() { return glm::vec2(m_v2Position.x - m_fWidth, m_v2Position.y - m_fHeight); }
+	glm::vec3 GetMin() { return glm::vec3(m_v2Position.x - m_fX, m_v2Position.y - m_fY, m_v2Position.z - m_fZ); }
 
 	//--------------------------------------------------------------------------------------
 	// GetMax: Get the max of the box.
@@ -75,7 +96,7 @@ public:
 	// Return:
 	//		Vector2: a vector2 value for the max of the box.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 GetMax() { return glm::vec2(m_v2Position.x + m_fWidth, m_v2Position.y + m_fHeight); }
+	glm::vec3 GetMax() { return glm::vec3(m_v2Position.x + m_fX, m_v2Position.y + m_fY, m_v2Position.z + m_fZ); }
 
 	//--------------------------------------------------------------------------------------
 	// GetColour: Get the color of the box.
@@ -90,27 +111,41 @@ protected:
 	//--------------------------------------------------------------------------------------
 	// a float for the box width.
 	//--------------------------------------------------------------------------------------
-	float m_fWidth;
+	float m_fX;
 
 	//--------------------------------------------------------------------------------------
 	// a float for the box height.
 	//--------------------------------------------------------------------------------------
-	float m_fHeight;
+	float m_fY;
+
+
+
+
+
+
+	//--------------------------------------------------------------------------------------
+	// a float for the box height.
+	//--------------------------------------------------------------------------------------
+	float m_fZ;
+
+
+
+
 
 	//--------------------------------------------------------------------------------------
 	// a vector42for the box dimensions.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 m_v2Dimensions;
+	glm::vec3 m_v2Dimensions;
 
 	//--------------------------------------------------------------------------------------
 	// a vector2 for the box min.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 m_v2Min;
+	glm::vec3 m_v2Min;
 
 	//--------------------------------------------------------------------------------------
 	// a vector2 for the box max.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 m_v2Max;
+	glm::vec3 m_v2Max;
 
 	//--------------------------------------------------------------------------------------
 	// a vector4 for the box color.

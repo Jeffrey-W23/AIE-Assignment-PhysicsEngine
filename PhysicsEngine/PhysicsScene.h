@@ -64,7 +64,7 @@ public:
 	// Param:
 	//		v2Gravity: vector2 for gravity to set.
 	//--------------------------------------------------------------------------------------
-	void SetGravity(const glm::vec2 v2Gravity) { m_v2Gravity = v2Gravity; }
+	void SetGravity(const glm::vec3 v2Gravity) { m_v2Gravity = v2Gravity; }
 
 	//--------------------------------------------------------------------------------------
 	// GetGravity: Get the gravity of the scene.
@@ -72,7 +72,7 @@ public:
 	// Return:
 	//		Vector2: Current gravity of the scene.
 	//--------------------------------------------------------------------------------------
-	glm::vec2 GetGravity() const { return m_v2Gravity; }
+	glm::vec3 GetGravity() const { return m_v2Gravity; }
 
 	//--------------------------------------------------------------------------------------
 	// SetTimeStep: Set the timestep of the physicsScene.
@@ -199,7 +199,7 @@ protected:
 	//--------------------------------------------------------------------------------------
 	// A vector2 for gravity
 	//--------------------------------------------------------------------------------------
-	glm::vec2 m_v2Gravity;
+	glm::vec3 m_v2Gravity;
 
 	//--------------------------------------------------------------------------------------
 	// A float for time step

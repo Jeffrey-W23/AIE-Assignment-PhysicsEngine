@@ -38,7 +38,7 @@ public:
 	//		gravity: a vector2 for an objects gravity.
 	//		timeStep: a float for each timeStep
 	//--------------------------------------------------------------------------------------
-	virtual void FixedUpdate(glm::vec2 v2Gravity, float fTimeStep) = 0;
+	virtual void FixedUpdate(glm::vec3 v2Gravity, float fTimeStep) = 0;
 	
 	//--------------------------------------------------------------------------------------
 	// Debug: A virtual function of PhysicsObject for debugging.
