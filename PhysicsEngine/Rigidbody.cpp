@@ -7,7 +7,7 @@
 
 
 
-static const float MIN_LINEAR_THRESHOLD = 0.02f;
+static const float MIN_LINEAR_THRESHOLD = 0.02f; // make tweakable in imgui
 static const float MIN_ROTATION_THRESHOLD = 0.02f;
 
 
@@ -71,7 +71,8 @@ void Rigidbody::FixedUpdate(glm::vec3 v2Gravity, float fTimeStep)
 	
 	// remember when applying the force of gravity, mass cancels out 
 	m_v2Velocity += v2Gravity * fTimeStep;
-	m_v2Position += m_v2Velocity * fTimeStep; m_v2Velocity -= m_v2Velocity * m_fLinearDrag * fTimeStep;
+	m_v2Position += m_v2Velocity * fTimeStep; 
+	m_v2Velocity -= m_v2Velocity * m_fLinearDrag * fTimeStep;
 	m_fRotation += m_fAngularVelocity * fTimeStep;
 	m_fAngularVelocity -= m_fAngularVelocity * m_fAngularDrag * fTimeStep;
 	

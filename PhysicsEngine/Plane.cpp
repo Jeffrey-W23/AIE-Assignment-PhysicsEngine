@@ -61,7 +61,10 @@ void Plane::ResolveCollision(Rigidbody* pActor, glm::vec3 v2Contact)
 	glm::vec3 v2RelativeVelocity = pActor->GetVelocity();
 
 	float fElasticity = pActor->GetElasticity();
-	float fJFormula = glm::dot(-(1 + fElasticity) * (v2RelativeVelocity), v2Normal) / glm::dot(v2Normal, v2Normal * (1 / pActor->GetMass()));
+	float fJFormula = glm::dot(-(1 + fElasticity) * (v2RelativeVelocity), v2Normal) / (1 / pActor->GetMass());
+
+	//float fJFormula = glm::dot(-(1 + fElasticity) * (v2RelativeVelocity), v2Normal) / glm::dot(v2Normal, v2Normal * (1 / pActor->GetMass()));
+
 
 	glm::vec3 v2Force = v2Normal * fJFormula;
 
