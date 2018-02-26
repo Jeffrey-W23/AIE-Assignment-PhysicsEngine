@@ -4,6 +4,8 @@
 #include "PhysicsScene.h"
 #include <glm/mat4x4.hpp>
 
+class Camera;
+
 //--------------------------------------------------------------------------------------
 // PhysicsEngineApp object. Inherits from Application.
 //--------------------------------------------------------------------------------------
@@ -69,7 +71,7 @@ protected:
 
 
 
-
+	Camera* m_pCamera;
 
 	float cameraSpeed;
 };

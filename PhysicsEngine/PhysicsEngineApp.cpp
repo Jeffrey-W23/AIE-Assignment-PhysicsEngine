@@ -7,6 +7,7 @@
 #include "Plane.h"
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include "Camera.h"
 
 //--------------------------------------------------------------------------------------
 // Default Constructor.
@@ -35,9 +36,11 @@ bool PhysicsEngineApp::startup() {
 	// initialise gizmo primitive counts
 	aie::Gizmos::create(10000, 10000, 10000, 10000);
 
+	m_pCamera = new Camera();
+
 	// create simple camera transforms
-	m_viewMatrix = glm::lookAt(glm::vec3(50), glm::vec3(0), glm::vec3(0, 1, 0)); //10
-	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, 16.0f / 9.0f, 0.1f, 1000.0f);
+	m_pCamera->SetLookAt(glm::vec3(50), glm::vec3(0), glm::vec3(0, 1, 0)); //10
+	m_pCamera->SetPerspective(glm::pi<float>() * 0.25f, 16.0f / 9.0f, 0.1f, 1000.0f);
 
 
 	cameraSpeed = 10.0f;
@@ -111,7 +114,7 @@ void PhysicsEngineApp::shutdown() {
 
 
 
-
+	delete m_pCamera;
 
 
 	// delete scene
@@ -155,7 +158,7 @@ void PhysicsEngineApp::update(float deltaTime) {
 		quit();
 
 
-
+	m_pCamera->Update(deltaTime);
 
 
 	/*if (input->isKeyDown(aie::INPUT_KEY_W))
@@ -179,5 +182,7 @@ void PhysicsEngineApp::draw() {
 	// update perspective based on screen size
 	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.0f);
 
-	aie::Gizmos::draw(m_projectionMatrix * m_viewMatrix);
+
+
+	aie::Gizmos::draw( m_pCamera->GetProjectionView());
 }
