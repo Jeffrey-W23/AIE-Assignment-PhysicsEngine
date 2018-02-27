@@ -1,44 +1,76 @@
+// #includes, using, etc
 #include "Camera.h"
 
-
-
+//--------------------------------------------------------------------------------------
+// Default Constructor.
+//--------------------------------------------------------------------------------------
 Camera::Camera()
 {
 }
 
-
+//--------------------------------------------------------------------------------------
+// Default Destructor
+//--------------------------------------------------------------------------------------
 Camera::~Camera()
 {
 }
 
-
-
-void Camera::Update(float deltaTime) // remove
-{}
-
-
-
-void Camera::SetPerspective(float FieldOfView, float aspectRatio, float near, float far)
+//--------------------------------------------------------------------------------------
+// SetPerspective: Create perspective projection transform.
+//
+// Param:
+//		fFieldOfView: float value for the field of view of the camera.
+//		fAspectRatio: float value for the aspect ratio of the camera.
+//		fNear: float value for
+//		fFar: float value for
+//--------------------------------------------------------------------------------------
+void Camera::SetPerspective(float fFieldOfView, float fAspectRatio, float fNear, float fFar)
 {
-	projectionTransform = glm::perspective(FieldOfView, aspectRatio, near, far);
+	// create perspective transform
+	m_m4ProjectionTransform = glm::perspective(fFieldOfView, fAspectRatio, fNear, fFar);
+	
+	// update transfrom
 	UpdateProjectionViewTransform();
 }
 
-void Camera::SetLookAt(glm::vec3 from, glm::vec3 to, glm::vec3 up)
+//--------------------------------------------------------------------------------------
+// SetLookAt: Builds the view transform.
+//
+// Param:
+//		v3From: vector3 value for
+//		v3To: vector3 value for
+//		v3Up: vector3 value for
+//--------------------------------------------------------------------------------------
+void Camera::SetLookAt(glm::vec3 v3From, glm::vec3 v3To, glm::vec3 v3Up)
 {
-	viewTransform = glm::lookAt(from, to, up);
-	worldTransform = glm::inverse(viewTransform);
+	// build the transform
+	m_m4ViewTransform = glm::lookAt(v3From, v3To, v3Up);
+	m_m4WorldTransform = glm::inverse(m_m4ViewTransform);
+	
+	// update transform
 	UpdateProjectionViewTransform();
 }
 
-void Camera::SetPosition(glm::vec3 position)
+//--------------------------------------------------------------------------------------
+// SetPosition: Set the position of the camera in 3d space.
+//
+// Param:
+//		v3Position: a vector3 for the desired position of the camera.
+//--------------------------------------------------------------------------------------
+void Camera::SetPosition(glm::vec3 v3Position)
 {
-	worldTransform[3] = glm::vec4(position.x, position.y, position.z, 1);
-	viewTransform = glm::inverse(worldTransform);
+	// set the position vector
+	m_m4WorldTransform[3] = glm::vec4(v3Position.x, v3Position.y, v3Position.z, 1);
+	m_m4ViewTransform = glm::inverse(m_m4WorldTransform);
+	
+	// update transform
 	UpdateProjectionViewTransform();
 }
 
+//--------------------------------------------------------------------------------------
+// UpdateProjectionViewTransform: Update the projection view transform.
+//--------------------------------------------------------------------------------------
 void Camera::UpdateProjectionViewTransform()
 {
-	projectionViewTransform = projectionTransform * viewTransform;
+	m_m4ProjectionViewTransform = m_m4ProjectionTransform * m_m4ViewTransform;
 }

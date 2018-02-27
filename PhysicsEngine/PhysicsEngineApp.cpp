@@ -7,7 +7,7 @@
 #include "Plane.h"
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include "Camera.h"
+#include "FlyCamera.h"
 
 //--------------------------------------------------------------------------------------
 // Default Constructor.
@@ -36,14 +36,13 @@ bool PhysicsEngineApp::startup() {
 	// initialise gizmo primitive counts
 	aie::Gizmos::create(10000, 10000, 10000, 10000);
 
-	m_pCamera = new Camera();
+	m_pCamera = new FlyCamera();
 
 	// create simple camera transforms
 	m_pCamera->SetLookAt(glm::vec3(50), glm::vec3(0), glm::vec3(0, 1, 0)); //10
 	m_pCamera->SetPerspective(glm::pi<float>() * 0.25f, 16.0f / 9.0f, 0.1f, 1000.0f);
 
 
-	cameraSpeed = 10.0f;
 
 
 
@@ -55,16 +54,19 @@ bool PhysicsEngineApp::startup() {
 	m_pPhysicsScene->SetGravity(glm::vec3(0, -9.8, 0));
 	m_pPhysicsScene->SetTimeStep(0.003f);
 
-	Sphere* ball1 = new Sphere(glm::vec3(-16, 0, 32), glm::vec3(50, 0, 0), 3.0f, 1.0f, glm::vec4(1, 0, 0, 1));
-	Sphere* ball2 = new Sphere(glm::vec3(16, 0, -16), glm::vec3(-50, 0, 0), 3.0f, 1.0f, glm::vec4(0, 1, 0, 1));
-	Sphere* ball3 = new Sphere(glm::vec3(32, 16, 0), glm::vec3(0, -25, 0), 3.0f, 1.0f, glm::vec4(0.75f, 0.75f, 0.75f, 1));
-	Sphere* ball4 = new Sphere(glm::vec3(-16, 16, 10), glm::vec3(50, 0, 0), 3.0f, 1.0f, glm::vec4(1, 0.5f, 0, 1));
+	// Box vs Box
+	Box* box1 = new Box(glm::vec3(-16, 32, 0), glm::vec3(15, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(0, 0, 1, 1));
+	Box* box2 = new Box(glm::vec3(16, 32, 0), glm::vec3(-15, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(1, 1, 0, 1));
+	
+	// Box vs sphere
+	Box* box3 = new Box(glm::vec3(-16, 12, 0), glm::vec3(15, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(1, 0, 1, 1));
+	Sphere* ball1 = new Sphere(glm::vec3(16, 12, 0), glm::vec3(-15, 0, 0), 3.0f, 1.0f, glm::vec4(1, 0.5f, 0, 1));
 
-	Box* box1 = new Box(glm::vec3(-16, 32, 0), glm::vec3(0, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(0, 0, 1, 1));
-	Box* box2 = new Box(glm::vec3(16, 32, 0), glm::vec3(0, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(1, 1, 0, 1));
-	Box* box3 = new Box(glm::vec3(-32, 16, 0), glm::vec3(0, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(1, 0.5f, 0.76f, 1));
-	Box* box4 = new Box(glm::vec3(16, 16, 0), glm::vec3(0, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(0.5f, 0, 0.7f, 1));
+	// Box vs sphere
+	Sphere* ball2 = new Sphere(glm::vec3(-16, 0, 0), glm::vec3(15, 0, 0), 3.0f, 1.0f, glm::vec4(1, 1.5f, 0, 1));
+	Sphere* ball3 = new Sphere(glm::vec3(16, 0, 0), glm::vec3(-15, 0, 0), 3.0f, 1.0f, glm::vec4(1, 0.5f, 1, 1));
 
+	// Everything vs Planes
 	Plane* plane1 = new Plane(glm::normalize(glm::vec3(-1, 10, 0)), -30);
 	Plane* plane2 = new Plane(glm::normalize(glm::vec3(-10, 10, 0)), -30);
 	Plane* plane3 = new Plane(glm::normalize(glm::vec3(10, 0, 0)), -50);
@@ -72,12 +74,10 @@ bool PhysicsEngineApp::startup() {
 	m_pPhysicsScene->AddActor(ball1);
 	m_pPhysicsScene->AddActor(ball2);
 	m_pPhysicsScene->AddActor(ball3);
-	m_pPhysicsScene->AddActor(ball4);
 
 	m_pPhysicsScene->AddActor(box1);
 	m_pPhysicsScene->AddActor(box2);
 	m_pPhysicsScene->AddActor(box3);
-	m_pPhysicsScene->AddActor(box4);
 
 	m_pPhysicsScene->AddActor(plane1);
 	m_pPhysicsScene->AddActor(plane2);
@@ -159,15 +159,6 @@ void PhysicsEngineApp::update(float deltaTime) {
 
 
 	m_pCamera->Update(deltaTime);
-
-
-	/*if (input->isKeyDown(aie::INPUT_KEY_W))
-		
-	if (input->isKeyDown(aie::INPUT_KEY_A))
-		
-	if (input->isKeyDown(aie::INPUT_KEY_S))
-		
-	if (input->isKeyDown(aie::INPUT_KEY_D))*/
 		
 }
 
@@ -184,5 +175,5 @@ void PhysicsEngineApp::draw() {
 
 
 
-	aie::Gizmos::draw( m_pCamera->GetProjectionView());
+	aie::Gizmos::draw(m_pCamera->GetProjectionView());
 }

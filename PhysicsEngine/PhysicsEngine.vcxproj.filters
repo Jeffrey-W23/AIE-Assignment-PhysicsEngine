@@ -1,75 +1,103 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{1b01647f-a6f6-44b9-af80-872f15185b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{dc84a990-15f7-4c9c-98b3-6b3cf9370319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{8e7c8dc0-6f4a-4ca5-a870-67a066263e06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{a6fb8414-016a-4061-b39f-f04477673da1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera\Source Files">
+      <UniqueIdentifier>{7fcb5422-4b77-4af1-a374-9c62e04acdaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera\Header Files">
+      <UniqueIdentifier>{d424f5df-4dc5-4fe8-a7dc-599f8ded2e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Header Files">
+      <UniqueIdentifier>{fe02a408-1437-4bd2-aa13-65371b61d5d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Source Files">
+      <UniqueIdentifier>{0faeacfd-55a2-45fa-80a5-2937c3d3bc31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other\Header Files">
+      <UniqueIdentifier>{2182a908-7e0d-42fe-b6cd-cc80e3671201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other\Source Files">
+      <UniqueIdentifier>{ff9407af-46c7-42de-8e85-14a9d58e7ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Header Files">
+      <UniqueIdentifier>{344e91b1-f069-412f-b989-7d6e6bd2b60f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Source Files">
+      <UniqueIdentifier>{e0c1e14d-b986-4a7a-90e8-15a2643307a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsEngineApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Box.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Plane.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rigidbody.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Camera\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FlyCamera.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Camera\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsScene.cpp">
+      <Filter>Scene\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsEngineApp.cpp">
+      <Filter>Other\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Objects\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Objects\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>Objects\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Objects\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PhysicsEngineApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Plane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RigidBody.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
+      <Filter>Camera\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FlyCamera.h">
-      <Filter>Header Files</Filter>
+      <Filter>Camera\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsScene.h">
+      <Filter>Scene\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsEngineApp.h">
+      <Filter>Other\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Objects\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObject.h">
+      <Filter>Objects\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Objects\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Objects\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Objects\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
