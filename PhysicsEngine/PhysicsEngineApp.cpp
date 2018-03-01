@@ -31,23 +31,18 @@ PhysicsEngineApp::~PhysicsEngineApp() {
 //--------------------------------------------------------------------------------------
 bool PhysicsEngineApp::startup() {
 	
+	// Set background color
 	setBackgroundColour(0.25f, 0.25f, 0.25f);
 
 	// initialise gizmo primitive counts
 	aie::Gizmos::create(10000, 10000, 10000, 10000);
 
+	// initialize camera.
 	m_pCamera = new FlyCamera();
 
 	// create simple camera transforms
 	m_pCamera->SetLookAt(glm::vec3(50), glm::vec3(0), glm::vec3(0, 1, 0)); //10
 	m_pCamera->SetPerspective(glm::pi<float>() * 0.25f, 16.0f / 9.0f, 0.1f, 1000.0f);
-
-
-
-
-
-
-
 
 	// Set up the physics scene
 	m_pPhysicsScene = new PhysicsScene();
@@ -71,36 +66,22 @@ bool PhysicsEngineApp::startup() {
 	Plane* plane2 = new Plane(glm::normalize(glm::vec3(-10, 10, 0)), -30);
 	Plane* plane3 = new Plane(glm::normalize(glm::vec3(10, 0, 0)), -50);
 
+	// Add ball actors to scene
 	m_pPhysicsScene->AddActor(ball1);
 	m_pPhysicsScene->AddActor(ball2);
 	m_pPhysicsScene->AddActor(ball3);
 
+	// Add box actors to scene
 	m_pPhysicsScene->AddActor(box1);
 	m_pPhysicsScene->AddActor(box2);
 	m_pPhysicsScene->AddActor(box3);
 
+	// Add plane actors to scene
 	m_pPhysicsScene->AddActor(plane1);
 	m_pPhysicsScene->AddActor(plane2);
 	m_pPhysicsScene->AddActor(plane3);
 
-	//ball1->ApplyForce(glm::vec3(50, 0, 0));
-	//ball2->ApplyForce(glm::vec3(-50, 0, 0));
-	//ball3->ApplyForce(glm::vec3(0, -25, 0));
-	//ball4->ApplyForce(glm::vec3(50, 0, 0));
-
-	//box1->ApplyForce(glm::vec3(50, 0, 0));
-	//box2->ApplyForce(glm::vec3(-50, 0, 0));
-	//box3->ApplyForce(glm::vec3(0, -25, 0));
-	//box4->ApplyForce(glm::vec3(-50, 0, 0));
-
-
-
-
-
-
-
-
-
+	// return true.
 	return true;
 }
 
@@ -109,13 +90,11 @@ bool PhysicsEngineApp::startup() {
 //--------------------------------------------------------------------------------------
 void PhysicsEngineApp::shutdown() {
 
+	// Delete gizmos
 	aie::Gizmos::destroy();
 
-
-
-
+	// delete fly camera
 	delete m_pCamera;
-
 
 	// delete scene
 	delete m_pPhysicsScene;
@@ -154,10 +133,11 @@ void PhysicsEngineApp::update(float deltaTime) {
 	// quit if we press escape
 	aie::Input* input = aie::Input::getInstance();
 
+	// if esc key pressed close program.
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
 
-
+	// Update the fly camera.
 	m_pCamera->Update(deltaTime);
 		
 }
@@ -171,9 +151,8 @@ void PhysicsEngineApp::draw() {
 	clearScreen();
 
 	// update perspective based on screen size
-	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.0f);
+	//m_m4ProjectionMatrix = glm::perspective(glm::pi<float>() * 0.25f, getWindowWidth() / (float)getWindowHeight(), 0.1f, 1000.0f);
 
-
-
+	// Draw camera perspective.
 	aie::Gizmos::draw(m_pCamera->GetProjectionView());
 }

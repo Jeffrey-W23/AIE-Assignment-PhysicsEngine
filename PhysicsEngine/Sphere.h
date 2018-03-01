@@ -9,30 +9,22 @@ class Sphere : public Rigidbody
 {
 public:
 
-
-
-
-
-
-	Sphere() = delete;
-
-
-
-
-
-
-
 	//--------------------------------------------------------------------------------------
 	// Default Constructor.
+	Sphere() = delete;
+	//--------------------------------------------------------------------------------------
+
+	//--------------------------------------------------------------------------------------
+	// Constructor.
 	//
 	// Param:
-	//		v2Position: a vector2 for sphere postion.
-	//		v2Velocity: a vector2 for sphere velocity.
+	//		v3Position: a vector3 for sphere postion.
+	//		v3Velocity: a vector3 for sphere velocity.
 	//		fMass: a float value for sphere mass.
 	//		fRadius: a float value for sphere radius.
 	//		v4Color: a vector4 for sphere color.
 	//--------------------------------------------------------------------------------------
-	Sphere(glm::vec3 v2Position, glm::vec3 v2Velocity, float fMass, float fRadius, glm::vec4 v4Color);
+	Sphere(glm::vec3 v3Position, glm::vec3 v3Velocity, float fMass, float fRadius, glm::vec4 v4Color);
 
 	//--------------------------------------------------------------------------------------
 	// Default Destructor.

@@ -8,14 +8,14 @@
 // Constructor.
 //
 // Param:
-//		v2Normal: a vector2 for the normal of the plane.
+//		v3Normal: a vector3 for the normal of the plane.
 //		fDistance: a float value for the distance of the plane. 
 //--------------------------------------------------------------------------------------
-Plane::Plane(glm::vec3 v2Normal, float fDistance) : PhysicsObject(ESHAPETYPE_PLANE)
+Plane::Plane(glm::vec3 v3Normal, float fDistance) : PhysicsObject(ESHAPETYPE_PLANE)
 {
 	// set defaults
 	m_fDistanceToOrigin = fDistance;
-	m_v2Normal = v2Normal;
+	m_v3Normal = v3Normal;
 }
 
 //--------------------------------------------------------------------------------------
@@ -32,41 +32,39 @@ void Plane::MakeGizmo()
 {
 	// make the plane object
 	float fLineSegmentLength = 300; 
-	glm::vec3 v2Parallel(m_v2Normal.y, -m_v2Normal.x, 0);
-	glm::vec3 v2CenterPoint = m_v2Normal * m_fDistanceToOrigin;
+	glm::vec3 v3Parallel(m_v3Normal.y, -m_v3Normal.x, 0);
+	glm::vec3 v3CenterPoint = m_v3Normal * m_fDistanceToOrigin;
 	glm::vec4 v4Colour(1, 1, 1, 1); 
-	glm::vec3 v2Start = v2CenterPoint + (v2Parallel * fLineSegmentLength);
-	glm::vec3 v2End = v2CenterPoint - (v2Parallel * fLineSegmentLength);
+	glm::vec3 v3Start = v3CenterPoint + (v3Parallel * fLineSegmentLength);
+	glm::vec3 v3End = v3CenterPoint - (v3Parallel * fLineSegmentLength);
 	
-	
-	
-	
-	
-	// Get back to Adam about this next week.
+	// Having trouble getting this to draw. add back later
 	//aie::Gizmos::add2DLine(v2Start, v2End, v4Colour);
-	aie::Gizmos::addDisk(v2Start, 100, 4, v4Colour);
+	//aie::Gizmos::addDisk(v3Start, 100, 4, v4Colour);
 }
 
-
-
-
-
-
-
-
-
-void Plane::ResolveCollision(Rigidbody* pActor, glm::vec3 v2Contact)
+//--------------------------------------------------------------------------------------
+// ResolveCollision: Resolve a collision between 2 shapes with a rigidbody.
+//
+// Param:
+//		pActor: the object being collided with.
+//		v3Contact: contact point between 2 shapes.
+//--------------------------------------------------------------------------------------
+void Plane::ResolveCollision(Rigidbody* pActor, glm::vec3 v3Contact)
 {
-	glm::vec3 v2Normal = m_v2Normal;
-	glm::vec3 v2RelativeVelocity = pActor->GetVelocity();
+	// Calculate velocity and normal
+	glm::vec3 v3Normal = m_v3Normal;
+	glm::vec3 v3RelativeVelocity = pActor->GetVelocity();
 
+	//Calculate the J formula and the elastcity.
 	float fElasticity = pActor->GetElasticity();
-	float fJFormula = glm::dot(-(1 + fElasticity) * (v2RelativeVelocity), v2Normal) / (1 / pActor->GetMass());
+	float fJFormula = glm::dot(-(1 + fElasticity) * (v3RelativeVelocity), v3Normal) / (1 / pActor->GetMass());
 
 	//float fJFormula = glm::dot(-(1 + fElasticity) * (v2RelativeVelocity), v2Normal) / glm::dot(v2Normal, v2Normal * (1 / pActor->GetMass()));
 
+	// Calculate force.
+	glm::vec3 v3Force = v3Normal * fJFormula;
 
-	glm::vec3 v2Force = v2Normal * fJFormula;
-
-	pActor->ApplyForce(v2Force, v2Contact - pActor->GetPosition());
+	// Apply the force to other object.
+	pActor->ApplyForce(v3Force, v3Contact - pActor->GetPosition());
 }

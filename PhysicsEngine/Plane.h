@@ -20,10 +20,10 @@ public:
 	// Constructor.
 	//
 	// Param:
-	//		v2Normal: a vector2 for the normal of the plane.
+	//		v3Normal: a vector3 for the normal of the plane.
 	//		fDistance: a float value for the distance of the plane. 
 	//--------------------------------------------------------------------------------------
-	Plane(glm::vec3 v2Normal, float fDistance);
+	Plane(glm::vec3 v3Normal, float fDistance);
 
 	//--------------------------------------------------------------------------------------
 	// Default Destructor
@@ -34,10 +34,10 @@ public:
 	// FixedUpdate: A function to update objects over time.
 	//
 	// Param:
-	//		v2Gravity: vector2 gravity to apply to the update function.
+	//		v3Gravity: vector3 gravity to apply to the update function.
 	//		fTimeStep: float value for the time time step of the update.
 	//--------------------------------------------------------------------------------------
-	virtual void FixedUpdate(glm::vec3 v2Gravity, float fTimeStep) {}
+	virtual void FixedUpdate(glm::vec3 v3Gravity, float fTimeStep) {}
 
 	//--------------------------------------------------------------------------------------
 	// Debug: Debugging function for this object.
@@ -54,35 +54,22 @@ public:
 	//--------------------------------------------------------------------------------------
 	virtual void ResetPosition() {}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	void ResolveCollision(Rigidbody* actor2, glm::vec3 v2Contact);
-
-
-
-
-
-
-
+	//--------------------------------------------------------------------------------------
+	// ResolveCollision: Resolve a collision between 2 shapes with a rigidbody.
+	//
+	// Param:
+	//		pActor: the object being collided with.
+	//		v3Contact: contact point between 2 shapes.
+	//--------------------------------------------------------------------------------------
+	void ResolveCollision(Rigidbody* pActor, glm::vec3 v3Contact);
 
 	//--------------------------------------------------------------------------------------
 	// GetNormal: Get the normal of the plane.
 	//
 	// Return:
-	//		Vector2: the normal of the plane.
+	//		Vector3: the normal of the plane.
 	//--------------------------------------------------------------------------------------
-	glm::vec3 GetNormal() { return m_v2Normal; }
+	glm::vec3 GetNormal() { return m_v3Normal; }
 
 	//--------------------------------------------------------------------------------------
 	// GetDistance: get the distance to orgin of the plane.
@@ -95,9 +82,9 @@ public:
 protected: 
 
 	//--------------------------------------------------------------------------------------
-	// A vector2 for the normal
+	// A vector3 for the normal
 	//--------------------------------------------------------------------------------------
-	glm::vec3 m_v2Normal;
+	glm::vec3 m_v3Normal;
 
 	//--------------------------------------------------------------------------------------
 	// A float for the dsitance to Origin.

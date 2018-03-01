@@ -35,10 +35,10 @@ public:
 	// FixedUpdate: A virtual function of PhysicsObject for updating each frame.
 	//
 	// Param:
-	//		gravity: a vector2 for an objects gravity.
+	//		v3Gravity: a vector3 for an objects gravity.
 	//		timeStep: a float for each timeStep
 	//--------------------------------------------------------------------------------------
-	virtual void FixedUpdate(glm::vec3 v2Gravity, float fTimeStep) = 0;
+	virtual void FixedUpdate(glm::vec3 v3Gravity, float fTimeStep) = 0;
 	
 	//--------------------------------------------------------------------------------------
 	// Debug: A virtual function of PhysicsObject for debugging.
@@ -56,7 +56,10 @@ public:
 	virtual void ResetPosition() {};
 
 	//--------------------------------------------------------------------------------------
-	// EShapeType: 
+	// EShapeType: Get the object shape type.
+	//
+	// Return:
+	//		EShapeType: an enum of what the shape id of this object is.
 	//--------------------------------------------------------------------------------------
 	EShapeType GetShapeID() { return m_eShapeID; }
 

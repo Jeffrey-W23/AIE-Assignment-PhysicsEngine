@@ -32,28 +32,28 @@ public:
 	// SetPerspective: 
 	//
 	// Param:
-	//		fFieldOfView:
-	//		fAspectRatio:
-	//		fNear:
-	//		fFar:
+	//		fFieldOfView: float value for the field of view of the camera.
+	//		fAspectRatio: float value for the aspect ratio of the camera.
+	//		fNear: float value for perspective near value.
+	//		fFar: float value for perspective far value.
 	//--------------------------------------------------------------------------------------
 	void SetPerspective(float fFieldOfView, float fAspectRatio, float fNear, float fFar);
 
 	//--------------------------------------------------------------------------------------
-	// SetLookAt:
+	// SetLookAt: Builds the view transform.
 	//
 	// Param:
-	//		v3From:
-	//		v3To:
-	//		v3Up:
+	//		v3From: vector3 value for from where to look at.
+	//		v3To: vector3 value for where to look at.
+	//		v3Up: vector3 value for up.
 	//--------------------------------------------------------------------------------------
 	void SetLookAt(glm::vec3 v3From, glm::vec3 v3To, glm::vec3 v3Up);
 
 	//--------------------------------------------------------------------------------------
-	// SetPosition:
+	// SetPosition: Set the position of the camera in 3d space.
 	//
 	// Param:
-	//		v3Position: 
+	//		v3Position: a vector3 for the desired position of the camera.
 	//--------------------------------------------------------------------------------------
 	void SetPosition(glm::vec3 v3Position);
 

@@ -21,8 +21,8 @@ Camera::~Camera()
 // Param:
 //		fFieldOfView: float value for the field of view of the camera.
 //		fAspectRatio: float value for the aspect ratio of the camera.
-//		fNear: float value for
-//		fFar: float value for
+//		fNear: float value for perspective near value.
+//		fFar: float value for perspective far value.
 //--------------------------------------------------------------------------------------
 void Camera::SetPerspective(float fFieldOfView, float fAspectRatio, float fNear, float fFar)
 {
@@ -37,9 +37,9 @@ void Camera::SetPerspective(float fFieldOfView, float fAspectRatio, float fNear,
 // SetLookAt: Builds the view transform.
 //
 // Param:
-//		v3From: vector3 value for
-//		v3To: vector3 value for
-//		v3Up: vector3 value for
+//		v3From: vector3 value for from where to look at.
+//		v3To: vector3 value for where to look at.
+//		v3Up: vector3 value for up.
 //--------------------------------------------------------------------------------------
 void Camera::SetLookAt(glm::vec3 v3From, glm::vec3 v3To, glm::vec3 v3Up)
 {
