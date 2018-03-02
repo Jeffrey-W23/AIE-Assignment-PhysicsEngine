@@ -61,7 +61,7 @@ public:
 	//		pActor: the object being collided with.
 	//		v3Contact: contact point between 2 shapes.
 	//--------------------------------------------------------------------------------------
-	void ResolveCollision(Rigidbody* pActor, glm::vec3 v3Contact);
+	void ResolveCollision(Rigidbody* pActor);//, glm::vec3 v3Contact);
 
 	//--------------------------------------------------------------------------------------
 	// GetNormal: Get the normal of the plane.

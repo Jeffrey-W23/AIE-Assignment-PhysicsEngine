@@ -41,6 +41,7 @@ void Plane::MakeGizmo()
 	// Having trouble getting this to draw. add back later
 	//aie::Gizmos::add2DLine(v2Start, v2End, v4Colour);
 	//aie::Gizmos::addDisk(v3Start, 100, 4, v4Colour);
+	//aie::Gizmos::addAABB(v3Start, v3End, v4Colour);
 }
 
 //--------------------------------------------------------------------------------------
@@ -50,7 +51,7 @@ void Plane::MakeGizmo()
 //		pActor: the object being collided with.
 //		v3Contact: contact point between 2 shapes.
 //--------------------------------------------------------------------------------------
-void Plane::ResolveCollision(Rigidbody* pActor, glm::vec3 v3Contact)
+void Plane::ResolveCollision(Rigidbody* pActor)//, glm::vec3 v3Contact)
 {
 	// Calculate velocity and normal
 	glm::vec3 v3Normal = m_v3Normal;
@@ -58,13 +59,14 @@ void Plane::ResolveCollision(Rigidbody* pActor, glm::vec3 v3Contact)
 
 	//Calculate the J formula and the elastcity.
 	float fElasticity = pActor->GetElasticity();
-	float fJFormula = glm::dot(-(1 + fElasticity) * (v3RelativeVelocity), v3Normal) / (1 / pActor->GetMass());
+	
+	//float fJFormula = glm::dot(-(1 + fElasticity) * (v3RelativeVelocity), v3Normal) / (1 / pActor->GetMass());
 
-	//float fJFormula = glm::dot(-(1 + fElasticity) * (v2RelativeVelocity), v2Normal) / glm::dot(v2Normal, v2Normal * (1 / pActor->GetMass()));
+	float fJFormula = glm::dot(-(1 + fElasticity) * (v3RelativeVelocity), v3Normal) / glm::dot(v3Normal, v3Normal * (1 / pActor->GetMass()));
 
 	// Calculate force.
 	glm::vec3 v3Force = v3Normal * fJFormula;
 
 	// Apply the force to other object.
-	pActor->ApplyForce(v3Force, v3Contact - pActor->GetPosition());
+	pActor->ApplyForce(v3Force);//, v3Contact - pActor->GetPosition());
 }

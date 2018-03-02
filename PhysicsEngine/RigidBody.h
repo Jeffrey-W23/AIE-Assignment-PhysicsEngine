@@ -46,7 +46,17 @@ public:
 	// Param:
 	//		v3Force: a vector3 of the force to be applied.
 	//--------------------------------------------------------------------------------------
-	void ApplyForce(glm::vec3 v3Force, glm::vec3 v3Position);
+	void ApplyForce(glm::vec3 v3Force);//, glm::vec3 v3Position);
+
+	//--------------------------------------------------------------------------------------
+	// ApplyForceToActor: Apply force to another rigidbody while applying negative 
+	// force to this object.
+	//
+	// Param:
+	//		pActor: Rigidbody pointer to apply force to.
+	//		v3Force: a vector3 of the force to be applied.
+	//--------------------------------------------------------------------------------------
+	void ApplyForceToActor(Rigidbody* pActor, glm::vec3 v3Force);
 
 	//--------------------------------------------------------------------------------------
 	// ResolveCollision: Resolve a collision between 2 shapes with a rigidbody.
@@ -54,7 +64,7 @@ public:
 	// Param:
 	//		pActor: the object being collided with.
 	//--------------------------------------------------------------------------------------
-	void ResolveCollision(Rigidbody* pActor, glm::vec3 v3Contact, glm::vec3* v3pCollisionNormal=nullptr);
+	void ResolveCollision(Rigidbody* pActor); //, glm::vec3 v3Contact, glm::vec3* v3pCollisionNormal=nullptr);
 	
 	//--------------------------------------------------------------------------------------
 	// SetPosition: Set the position of the rigidbody.
@@ -127,16 +137,6 @@ public:
 	//		float: the elasticity of the rigidbody.
 	//--------------------------------------------------------------------------------------
 	float GetElasticity() { return m_fElasticity; }
-
-	//--------------------------------------------------------------------------------------
-	// ApplyForceToActor: Apply force to another rigidbody while applying negative 
-	// force to this object.
-	//
-	// Param:
-	//		pActor: Rigidbody pointer to apply force to.
-	//		v3Force: a vector3 of the force to be applied.
-	//--------------------------------------------------------------------------------------
-	//void ApplyForceToActor(Rigidbody* pActor, glm::vec3 v3Force);
 
 protected:
 	

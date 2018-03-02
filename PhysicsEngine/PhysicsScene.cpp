@@ -196,8 +196,9 @@ bool PhysicsScene::PlaneToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 			glm::dot(v3Normal, v3TopLeft) - pPlane->GetDistance() < 0 ||
 			glm::dot(v3Normal, v3TopRight) - pPlane->GetDistance() < 0)
 		{
+
 			// Resolve collision between plane and box
-			//pPlane->ResolveCollision(pBox);
+			pPlane->ResolveCollision(pBox);
 
 			// there was a collision return true
 			return true;
@@ -249,8 +250,25 @@ bool PhysicsScene::SphereToPlane(PhysicsObject* obj1, PhysicsObject* obj2)
 			glm::vec3 v3Contact = pSphere->GetPosition() + (v3CollisionNormal * -pSphere->GetRadius());
 
 			// Resolve collision between plane and sphere
-			pPlane->ResolveCollision(pSphere, v3Contact);
+			pPlane->ResolveCollision(pSphere); //, v3Contact);
 			
+
+
+
+
+
+
+			
+			pSphere->SetPosition(v3Contact + v3CollisionNormal * pSphere->GetRadius() + fIntersection);
+
+
+
+
+
+
+
+
+
 			// there was a collision return true
 			return true;
 		}
@@ -288,7 +306,7 @@ bool PhysicsScene::SphereToSphere(PhysicsObject* obj1, PhysicsObject* obj2)
 		if (glm::length(v3Distance) <= fTotalRad)
 		{
 			// Resolve collision between sphere and sphere
-			pSphere1->ResolveCollision(pSphere2, 0.5f * (pSphere1->GetPosition() + pSphere2->GetPosition()));
+			pSphere1->ResolveCollision(pSphere2); //, 0.5f * (pSphere1->GetPosition() + pSphere2->GetPosition()));
 
 			// Resolve collision between spheres
 			float fOverlap = glm::length(v3Distance) - fTotalRad;
@@ -330,7 +348,7 @@ bool PhysicsScene::SphereToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 		if (glm::length(v3Value) <= pSphere->GetRadius())
 		{
 			// Resolve collision between sphere and box
-			//pSphere->ResolveCollision(pBox);
+			pSphere->ResolveCollision(pBox);
 
 			// there was a collision return true
 			return true;
@@ -406,7 +424,7 @@ bool PhysicsScene::BoxToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 			v3Max1.z >= v3Min2.z)
 		{
 			// Resolve collision between boxes
-			//pBox1->ResolveCollision(pBox2);
+			pBox1->ResolveCollision(pBox2);
 
 			// there was a collision return true
 			return true;

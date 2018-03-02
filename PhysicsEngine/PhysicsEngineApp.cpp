@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include "FlyCamera.h"
+#include "imgui.cpp"
+#include "imgui_draw.cpp"
 
 //--------------------------------------------------------------------------------------
 // Default Constructor.
@@ -62,9 +64,38 @@ bool PhysicsEngineApp::startup() {
 	Sphere* ball3 = new Sphere(glm::vec3(16, 0, 0), glm::vec3(-15, 0, 0), 3.0f, 1.0f, glm::vec4(1, 0.5f, 1, 1));
 
 	// Everything vs Planes
-	Plane* plane1 = new Plane(glm::normalize(glm::vec3(-1, 10, 0)), -30);
-	Plane* plane2 = new Plane(glm::normalize(glm::vec3(-10, 10, 0)), -30);
-	Plane* plane3 = new Plane(glm::normalize(glm::vec3(10, 0, 0)), -50);
+	//Plane* plane1 = new Plane(glm::normalize(glm::vec3(-1, 10, 0)), -30);
+	//Plane* plane2 = new Plane(glm::normalize(glm::vec3(-10, 10, 0)), -30);
+	//Plane* plane3 = new Plane(glm::normalize(glm::vec3(10, 0, 0)), -50);
+
+
+
+
+
+
+
+
+
+
+	Plane* plane1 = new Plane(glm::normalize(glm::vec3(0, 1, 0)), 0);
+
+	//Sphere* sphere1 = new Sphere(glm::vec3(5, 5, 0), glm::vec3(-10, 0, 0), 3.0f, 2, glm::vec4(1, 0, 0, 1));
+	//Sphere* sphere2 = new Sphere(glm::vec3(-5, 5, 1), glm::vec3(10, 0, 0), 3.0f, 2, glm::vec4(0, 1, 0, 1));
+
+	//m_pPhysicsScene->AddActor(sphere1);
+	//m_pPhysicsScene->AddActor(sphere2);
+	//m_pPhysicsScene->AddActor(plane1);
+
+
+
+
+
+
+
+
+
+
+
 
 	// Add ball actors to scene
 	m_pPhysicsScene->AddActor(ball1);
@@ -78,8 +109,8 @@ bool PhysicsEngineApp::startup() {
 
 	// Add plane actors to scene
 	m_pPhysicsScene->AddActor(plane1);
-	m_pPhysicsScene->AddActor(plane2);
-	m_pPhysicsScene->AddActor(plane3);
+	//m_pPhysicsScene->AddActor(plane2);
+	//m_pPhysicsScene->AddActor(plane3);
 
 	// return true.
 	return true;
@@ -106,7 +137,29 @@ void PhysicsEngineApp::shutdown() {
 // Param:
 //		deltaTime: Pass in deltaTime. A number that updates per second.
 //--------------------------------------------------------------------------------------
-void PhysicsEngineApp::update(float deltaTime) {
+void PhysicsEngineApp::update(float deltaTime) 
+{
+
+
+	ImGui::Begin("Add Shapes");
+
+
+	if (ImGui::Button("Add"))
+	{
+		Box* box1 = new Box(glm::vec3(-16, 32, 0), glm::vec3(15, 0, 0), 3.0f, 1.0f, 1.0f, 1.0f, glm::vec4(0, 0, 1, 1));
+		m_pPhysicsScene->AddActor(box1);
+	}
+
+
+
+
+	ImGui::End();
+
+
+
+
+
+
 
 	// wipe the gizmos clean for this frame
 	aie::Gizmos::clear();
@@ -138,8 +191,7 @@ void PhysicsEngineApp::update(float deltaTime) {
 		quit();
 
 	// Update the fly camera.
-	m_pCamera->Update(deltaTime);
-		
+	m_pCamera->Update(deltaTime, getWindowPtr());		
 }
 
 //--------------------------------------------------------------------------------------

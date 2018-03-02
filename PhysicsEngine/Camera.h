@@ -3,6 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
+// forward declares
+class GLFWwindow;
+
 //--------------------------------------------------------------------------------------
 // Camera object.
 //--------------------------------------------------------------------------------------
@@ -25,8 +28,9 @@ public:
 	//
 	// Param:
 	//		deltaTime: Pass in deltaTime. A number that updates per second.
+	//		pGLWindow: pointer to the glfw window.
 	//--------------------------------------------------------------------------------------
-	virtual void Update(float deltaTime) = 0; //GLFWwindow* pGLWindow
+	virtual void Update(float deltaTime, GLFWwindow* pGLWindow) = 0;
 	
 	//--------------------------------------------------------------------------------------
 	// SetPerspective: 
