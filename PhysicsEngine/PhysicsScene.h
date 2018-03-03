@@ -34,11 +34,8 @@ public:
 
 	//--------------------------------------------------------------------------------------
 	// RemoveActor: An Object to remove from the scene.
-	//
-	// Param:
-	//		pActor: the object to remove from the scene.
 	//--------------------------------------------------------------------------------------
-	void RemoveActor(PhysicsObject* pActor);
+	void RemoveActor(); //PhysicsObject* pActor);
 
 	//--------------------------------------------------------------------------------------
 	// Update: A function to update objects over time.

@@ -59,7 +59,6 @@ public:
 	//
 	// Param:
 	//		pActor: the object being collided with.
-	//		v3Contact: contact point between 2 shapes.
 	//--------------------------------------------------------------------------------------
 	void ResolveCollision(Rigidbody* pActor);//, glm::vec3 v3Contact);
 

@@ -21,8 +21,9 @@ public:
 	//		v3Position: a vector3 for box postion.
 	//		v3Velocity: a vector3 for box velocity.
 	//		fMass: a float value for box mass.
-	//		fWidth: a float value for the box width.
-	//		fHeight: a float value for the box height.
+	//		fX: a float value for the box width.
+	//		fY: a float value for the box height.
+	//		fZ: a float value for the box depth.
 	//		v4Color: a vector4 for box color.
 	//--------------------------------------------------------------------------------------
 	Box(glm::vec3 v3Position, glm::vec3 v3Velocity, float fMass, float fX, float fY, float fZ, glm::vec4 v4Colour);

@@ -18,6 +18,9 @@ public:
 	//		v3Velocity: the velocity of the rigidbody. 
 	//		fRotation: the rotation of the rigidbody.
 	//		fMass: the mass of the rigidbody.
+	//		fLinearDrag: the linear drag of the rigidbody.
+	//		fAngularDrag: the angular drag of the rigidbody.
+	//		fElasticity: the elasticity of the rigidbody.
 	//--------------------------------------------------------------------------------------
 	Rigidbody(EShapeType eShapeID, glm::vec3 v3Position, glm::vec3 v3Velocity, float fRotation, float fMass, float fLinearDrag, float fAngularDrag, float fElasticity);
 

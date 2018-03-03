@@ -4,7 +4,7 @@
 #include <glm/ext.hpp>
 
 // forward declares
-class GLFWwindow;
+struct GLFWwindow;
 
 //--------------------------------------------------------------------------------------
 // Camera object.

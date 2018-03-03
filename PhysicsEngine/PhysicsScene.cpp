@@ -58,14 +58,16 @@ void PhysicsScene::AddActor(PhysicsObject* pActor)
 
 //--------------------------------------------------------------------------------------
 // RemoveActor: An Object to remove from the scene.
-//
-// Param:
-//		pActor: the object to remove from the scene.
 //--------------------------------------------------------------------------------------
-void PhysicsScene::RemoveActor(PhysicsObject* pActor)
+void PhysicsScene::RemoveActor() //PhysicsObject* pActor)
 {
-	// Remove actor from thr array.
-	std::remove(std::begin(m_apActors), std::end(m_apActors), pActor);
+	// delete actor
+	delete m_apActors.back();
+	
+	// pop actor from the array.
+	m_apActors.pop_back();
+	
+	//std::remove(std::begin(m_apActors), std::end(m_apActors), pActor);
 }
 
 //--------------------------------------------------------------------------------------
@@ -183,22 +185,54 @@ bool PhysicsScene::PlaneToBox(PhysicsObject* obj1, PhysicsObject* obj2)
 	// if plane and box are valid
 	if (pPlane != nullptr || pBox != nullptr)
 	{
-		// Get the normal of the plane and get each point of the box
+		// Get the plane normal
 		glm::vec3 v3Normal = pPlane->GetNormal();
-		glm::vec3 v3BottomLeft = pBox->GetMin();
-		glm::vec3 v3BottomRight = pBox->GetMin() + glm::vec3(pBox->GetX(), 0, 0);
-		glm::vec3 v3TopLeft = pBox->GetMin() + glm::vec3(0, pBox->GetY(), 0);
-		glm::vec3 v3TopRight = pBox->GetMax();
 
-		// box crosses the plane
-		if (glm::dot(v3Normal, v3BottomLeft) - pPlane->GetDistance() < 0 ||
-			glm::dot(v3Normal, v3BottomRight) - pPlane->GetDistance() < 0 ||
-			glm::dot(v3Normal, v3TopLeft) - pPlane->GetDistance() < 0 ||
-			glm::dot(v3Normal, v3TopRight) - pPlane->GetDistance() < 0)
+		// calculate below box
+		glm::vec3 v3BottomLeftBelow = pBox->GetMin();
+		glm::vec3 v3BottomRightBelow = pBox->GetMin() + glm::vec3(pBox->GetX(), 0, 0);
+		glm::vec3 v3TopLeftBelow = pBox->GetMin() + glm::vec3(0, pBox->GetY(), 0);
+		glm::vec3 v3TopRightBelow = pBox->GetMax();
+
+		// calculate top box
+		glm::vec3 v3BottomLeftAbove = pBox->GetMin() + glm::vec3(0, 0, pBox->GetZ());
+		glm::vec3 v3BottomRightAbove = pBox->GetMin() + glm::vec3(pBox->GetX(), 0, pBox->GetZ());
+		glm::vec3 v3TopLeftAbove = pBox->GetMin() + glm::vec3(0, pBox->GetY(), pBox->GetZ());
+		glm::vec3 v3TopRightAbove = pBox->GetMax() + glm::vec3(0, 0, pBox->GetZ());
+
+		// new array of floats for overlaps
+		float afOverlap[8] = { 0.0f };
+
+		// Calculate overlaps.
+		afOverlap[0] = glm::dot(v3Normal, v3BottomLeftBelow) - pPlane->GetDistance();
+		afOverlap[1] = glm::dot(v3Normal, v3BottomRightBelow) - pPlane->GetDistance();
+		afOverlap[2] = glm::dot(v3Normal, v3TopLeftBelow) - pPlane->GetDistance();
+		afOverlap[3] = glm::dot(v3Normal, v3TopRightBelow) - pPlane->GetDistance();
+		afOverlap[4] = glm::dot(v3Normal, v3BottomLeftAbove) - pPlane->GetDistance();
+		afOverlap[5] = glm::dot(v3Normal, v3BottomRightAbove) - pPlane->GetDistance();
+		afOverlap[6] = glm::dot(v3Normal, v3TopLeftAbove) - pPlane->GetDistance();
+		afOverlap[7] = glm::dot(v3Normal, v3TopRightAbove) - pPlane->GetDistance();
+
+		// float to keep track of the max overlaps.
+		float fMaxOverlap = 0.0f;
+
+		// loop through the array of overlap values.
+		for (int i = 0; i < 8; ++i)
 		{
+			// check for overlap
+			if (afOverlap[i] < fMaxOverlap)
+			{
+				fMaxOverlap = afOverlap[i];
+			}
+		}
 
+		if (fMaxOverlap < 0)
+		{
 			// Resolve collision between plane and box
 			pPlane->ResolveCollision(pBox);
+
+			// Seperate the box from plane if overlapping.
+			pBox->SetPosition(pBox->GetPosition() - pPlane->GetNormal() * fMaxOverlap);
 
 			// there was a collision return true
 			return true;
@@ -246,28 +280,14 @@ bool PhysicsScene::SphereToPlane(PhysicsObject* obj1, PhysicsObject* obj2)
 		// if intersection is over 0
 		if (fIntersection > 0)
 		{
-			//
+			// calculate the contact point.
 			glm::vec3 v3Contact = pSphere->GetPosition() + (v3CollisionNormal * -pSphere->GetRadius());
 
 			// Resolve collision between plane and sphere
 			pPlane->ResolveCollision(pSphere); //, v3Contact);
 			
-
-
-
-
-
-
-			
+			// Seperate the sphere from plane if overlapping.
 			pSphere->SetPosition(v3Contact + v3CollisionNormal * pSphere->GetRadius() + fIntersection);
-
-
-
-
-
-
-
-
 
 			// there was a collision return true
 			return true;

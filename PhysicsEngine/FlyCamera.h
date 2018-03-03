@@ -3,7 +3,7 @@
 #include "Camera.h"
 
 // forward declares
-class GLFWwindow;
+struct GLFWwindow;
 
 //--------------------------------------------------------------------------------------
 // FlyCamera object.
@@ -38,21 +38,11 @@ protected:
 	//--------------------------------------------------------------------------------------
 	float m_fSpeed;
 
-
-
-
-
+	//--------------------------------------------------------------------------------------
+	// double values for camera mouse movement
+	//--------------------------------------------------------------------------------------
 	double m_dMouseX;
 	double m_dMouseY;
 	double m_dDeltaMouseX;
 	double m_dDeltaMouseY;
-
-	// bool to unlock and lock camera
-	bool m_bCameraLock = false;
-
-
-
-	// CAMERA LOCK IS BUGGY FIX
-
-
 };
